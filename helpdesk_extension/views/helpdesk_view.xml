@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="helpdesk_ticket_type_view_tree" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.type.form.view.inherit</field>
+        <field name="model">helpdesk.ticket.type</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_type_view_tree"/>
+        <field name="arch" type="xml">
+            <field name='name' position='after'>
+                <field name='team_id'/>
+            </field>
+        </field>
+    </record>    
+
+    <record id='helpdesk_ticket_view_activity' model='ir.ui.view'>
+        <field name='name'>helpdesk.ticket.view.activity.inherit</field>
+        <field name='model'>helpdesk.ticket</field>
+        <field name='inherit_id' ref='helpdesk.helpdesk_ticket_view_form'/>
+        <field name='arch' type='xml'>
+            <field name='ticket_type_id' position='attributes'>
+                <attribute name='domain'>[('team_id','=',team_id)]</attribute>
+                <attribute name='context'>{'default_team_id': team_id}</attribute>
+            </field>
+            <field name='partner_id' position='attributes'>
+                <attribute name='context'>{'property_id': property_id}</attribute>
+            </field>
+            <field name='partner_id' position='before'>
+                <field name='property_id' context="{'customer_id': partner_id}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
